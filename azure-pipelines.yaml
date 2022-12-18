@@ -12,7 +12,7 @@ pool: myAgentPool
 
 variables:
   python.version: '3.8.10'
-  group: ssh-config 
+  group: 'ssh-config' 
   # ToDo: Replace the service connection name as used in the DevOps project settings
   azureServiceConnectionId: 'myServiceConnection'
   # Project root folder. Point to the folder containing manage.py file.
