@@ -6,7 +6,11 @@ variable "tenant_id" {}
 
 # Resource Group/Location
 variable "location" {}
-variable "resource_group" {}
+variable "resource_group" {
+  type        = string
+  description = "The name of the Resource Group"
+  default = "learning"
+}
 variable "application_type" {}
 
 # Network
