@@ -31,10 +31,17 @@ stages:
     #--------------------------------------------#  
     # Download file terraform.tfvars from pipeline library
     - task: DownloadSecureFile@1
+      displayName: Download terraform.tfvars
       name: terraform
       displayName: Download terraform.tfvars
       inputs:
         secureFile: 'terraform.tfvars'
+    #copy terraform.tfvars to project folder
+    - task: Bash@3
+      displayName: Copy terraform.tfvars
+      inputs:
+        targetType: 'inline'
+        script: cp $(Agent.TempDirectory)/terraform.tfvars $(System.DefaultWorkingDirectory)/terraform/environments/test
 
     # Use Terraform to create the Infrastructure      
     # Install Terraform on the pipeline agent 
@@ -73,12 +80,6 @@ stages:
         knownHostsEntry: '$(knownHostsEntry)'
         sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCmAdaxV11RELCMOP20P59nI8eQCt974eWM8s3CKTD6FleButQtB1yiqh0aTzR9QClO10denTNlQt0EVrXFc1lrsApuRtNM/BQNfc4ervuCMFjVxndGyyqGlHf3e+qZyjbFTw08sOt0lfNf6Yavs0Cb98lsxB0dBzP4YB8l5NvprSKpnMoOY06/eUm9hjkizeqZQIQLTrB5w6m828eGK1FPTlXplnbo2bjzm0opple7AWKf+NrrstpfnArDq6F5MiizlflErpIeLG9wRaZZcwy2joZak2MOq5GWa+bmWMenDgnF79rPswMV4a+KR7J2JNUMNamOiFjQBgY25uRMYoHCScadK8pV+lRQCkGIOyy+nRGlL6QcghPB53A4Gagnp/cucRzxSxGSlTpgvm0o2C/SA0ruOR+0pwXQZCkDNsg1VMmQ1KuxNH581cwEdW4bop9ScQ7awlqC6jUepLI7G9vLUkfFmyA7EaUixh50mkMcNm6xOUG8jXNSO8MLoPFBf10= azureuser@tunhl-LinuxVm'
         sshKeySecureFile: 'tunhl-LinuxVm_key.pem' # Use secure file feature in the pipeline library UI to save the "id_rsa" file, as mentioned here: https://learn.microsoft.com/en-us/azure/devops/pipelines/library/secure-files?view=azure-devops#add-a-secure-file
-    #copy terraform.tfvars to project folder
-    - task: Bash@3
-      displayName: Copy terraform.tfvars
-      inputs:
-        targetType: 'inline'
-        script: cp $(Agent.TempDirectory)/terraform.tfvars $(System.DefaultWorkingDirectory)/terraform/environments/test
   
     # - task: DownloadSecureFile@1
     #  name: udacity_public_key
