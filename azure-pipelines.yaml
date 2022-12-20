@@ -63,8 +63,8 @@ stages:
     # ToDo: Change the inputs value below
     - task: InstallSSHKey@0
       inputs:
-        knownHostsEntry: 'github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl' # variable value
-        sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDVgUGazaogcpuwjhcAPFXfLv5g6JpSLUZCf1w8xL7nOsSbAnNXchnGVLrsamCsUNruyS0Nvz8OoKHHKA5477MLSPMz0rpIzVVfhax+bYarEgGMKxYWzA4qQjJj7gicVhfF31p9f51pAuCxUXdn1VtQAgPUIVT/RMAsjOf2vlezxhuORLf82uwp5hKNPe1LTJy/xyrssJ9Zo+sXdw9xTVNEC/CaXWJUtOPOegykMKWZwlKFk49pXto9Ta8q4RpGEEyR0pbawXnzfA8QD5fCAuulG8wuMssR5FiWHZUhc/tWOJi+wf3AZjt4iTTuH1j7n792pwDdWQsiff4kczJJw2H+eb0uKYTYePvzmjOqA+vftIEn2UkN3ACbOnOZ2cABg0nM223Ly1hS8zUvFHD7QejZa9Icdn9GEgQmNblkbzWTyztGNU6Te53W3qNu8AIWMU+Tl7PyQjxrJMBMfkg4egdURvWbCPuCYTVOgMjVXX5i+COlRV2v2fbTdugKxStL+EE= generated-by-azure'            # variable value
+        knownHostsEntry: '$(knownHostsEntry)'
+        sshPublicKey: '$(sshPublicKey)'
         sshKeySecureFile: 'tunhl-LinuxVm_key.pem' # Use secure file feature in the pipeline library UI to save the "id_rsa" file, as mentioned here: https://learn.microsoft.com/en-us/azure/devops/pipelines/library/secure-files?view=azure-devops#add-a-secure-file
     
     # - task: DownloadSecureFile@1
