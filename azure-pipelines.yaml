@@ -31,7 +31,6 @@ stages:
     #--------------------------------------------#  
     # Download file terraform.tfvars from pipeline library
     - task: DownloadSecureFile@1
-      displayName: Download terraform.tfvars
       name: terraform
       displayName: Download terraform.tfvars
       inputs:
