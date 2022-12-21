@@ -154,9 +154,6 @@ stages:
         npm install
       displayName: 'npm install'
 
-    - script: |
-        npm run build
-      displayName: 'npm build'
     # Postman - Install Newman    
     # ToDo: Update the command and verify the working directory
     - task: CmdLine@2
