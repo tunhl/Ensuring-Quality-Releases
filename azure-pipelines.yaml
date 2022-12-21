@@ -155,7 +155,7 @@ stages:
       displayName: 'npm install'
     - script: |
         node -v
-        sudo npm install -g newman
+        npm install -g newman
         mkdir -p log/newman
         newman -v
       displayName: Install Newman
