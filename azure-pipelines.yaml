@@ -179,6 +179,7 @@ stages:
       continueOnError: true
       inputs:
         script: |
+          cd $(System.DefaultWorkingDirectory)
           newman run automatedtesting/postman/regressionDummyRestAPI.json -e automatedtesting/postman/Env.RegressionTest.json --reporters cli,junit --reporter-junit-export log/newman/RegressionTest.xml --suppress-exit-code
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
 
@@ -189,6 +190,7 @@ stages:
       continueOnError: true
       inputs:
         script:  |
+          cd $(System.DefaultWorkingDirectory)
           newman run automatedtesting/postman/validationDummyRestAPI.json -e automatedtesting/postman/Env.ValidationTest.json --reporters cli,junit --reporter-junit-export log/newman/ValidationTest.xml --suppress-exit-code
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
 
