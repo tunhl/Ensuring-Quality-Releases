@@ -118,38 +118,80 @@ stages:
     #     environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
 
 #--------------------------------------------#    
+    - task: ArchiveFiles@2
+      displayName: Archive FakeRestAPI
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/FakeRestApi'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.BuildId)-FakeRestApi.zip'
+    - task: PublishPipelineArtifact@1
+      displayName: Upload package
+      inputs:   
+        targetPath: $(Build.BuildId)-FakeRestApi.zip
+        artifact: drop-FakeRestApi
+
+    - task: ArchiveFiles@2
+      displayName: Archive Selenium
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.BuildId)-selenium.zip'
+        replaceExistingArchive: true
+    - task: PublishPipelineArtifact@1
+      displayName: Upload Selenium
+      inputs:
+        targetPath: $(Build.BuildId)-selenium.zip
+        artifact: drop-selenium
+    # install node
+    - task: NodeTool@0
+      displayName: Install Node v14.X
+      inputs:
+        versionSpec: '14.x'
     # Postman - Install Newman    
     # ToDo: Update the command and verify the working directory
     - task: CmdLine@2
       displayName: Install Newman
       inputs:
-        script:           # ToDo: Write your commands to install newman
+        script: |
+          node -v
+          sudo npm install -g newman
+          mkdir -p log/newman
+          newman -v
         workingDirectory: $(System.DefaultWorkingDirectory)
+
+    # Postman Regression Test Suite    
+    # ToDo: Update the command and verify the working directory
+
+    - task: CmdLine@2
+      displayName: Run Regression Tests
+      continueOnError: true
+      inputs:
+        script: |
+          newman run automatedtesting/postman/regressionDummyRestAPI.json -e automatedtesting/postman/Env.RegressionTest.json --reporters cli,junit --reporter-junit-export log/newman/RegressionTest.xml --suppress-exit-code
+        workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+
     # Postman Data Validation Test Suite    
     # ToDo: Verify the working directory and the newman scripts
     - task: CmdLine@2
       displayName: Run Data Validation Tests
       continueOnError: true
       inputs:
-        script:           # ToDo: Write your commands
+        script:  |
+          newman run automatedtesting/postman/validationDummyRestAPI.json -e automatedtesting/postman/Env.ValidationTest.json --reporters cli,junit --reporter-junit-export log/newman/ValidationTest.xml --suppress-exit-code
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
-    # Postman Regression Test Suite    
-    # ToDo: Update the command and verify the working directory
-    - task: CmdLine@2
-      displayName: Run Regression Tests
-      continueOnError: true
-      inputs:
-        script:           # ToDo: Write your commands
-        workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+
     # Postman - Publish Results 
     # ToDo: Complete the task as explained here: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/test/publish-test-results?view=azure-devops&tabs=trx%2Cyaml#yaml-snippet
+
     - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'JUnit'
         testResultsFiles: '**/TEST-*.xml'
-        searchFolder:       # ToDo
+        searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
         mergeTestResults: true
-        testRunTitle:       # ToDo
+        testRunTitle:  'Test result for postman'
 
     #--------------------------------------------#
     # Selenium (UI) Test Suite - Archive the package  
@@ -215,8 +257,8 @@ stages:
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App'
             inputs:
-              azureSubscription:      # ToDo
-              appName:                # ToDo
+              azureSubscription:  '$(azureServiceConnectionId)'
+              appName: 'ensuring-quality-project-AppService'               # ToDo
               appType: webApp
               package: $(Pipeline.Workspace)/<artifact>/<archiveFile>       # ToDo: Use the published zip artifact. 
           #--------------------------------------------#    
