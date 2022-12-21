@@ -118,18 +118,18 @@ stages:
     #     environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
 
 #--------------------------------------------#    
-    # - task: ArchiveFiles@2
-    #   displayName: Archive FakeRestAPI
-    #   inputs:
-    #     rootFolderOrFile: '$(System.DefaultWorkingDirectory)/FakeRestAPI'
-    #     includeRootFolder: false
-    #     archiveType: 'zip'
-    #     archiveFile: '$(Build.BuildId)-FakeRestAPI.zip'
-    # - task: PublishPipelineArtifact@1
-    #   displayName: Upload package
-    #   inputs:   
-    #     targetPath: $(Build.BuildId)-FakeRestAPI.zip
-    #     artifact: drop-FakeRestAPI
+    - task: ArchiveFiles@2
+      displayName: Archive FakeRestAPI
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/FakeRestAPI'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.BuildId)-FakeRestAPI.zip'
+    - task: PublishPipelineArtifact@1
+      displayName: Upload package
+      inputs:   
+        targetPath: $(Build.BuildId)-FakeRestAPI.zip
+        artifact: drop-FakeRestAPI
 
     - task: ArchiveFiles@2
       displayName: Archive Selenium
@@ -204,35 +204,20 @@ stages:
       displayName: 'Upload Package'
       artifact: drop-uitests
 
-    #--------------------------------------------#    
-    # FakeRestAPI - Archive
-    # ToDo: Complete the ArchiveFiles@2 task and publish step 
-    - task: ArchiveFiles@2
-      displayName: 'Archive FakeRestAPI'
-      inputs:
-        rootFolderOrFile: 
-        includeRootFolder:
-        archiveType: 
-        archiveFile: 
-    # FakeRestAPI - Publish    
-    - publish: 
-      displayName: 
-      artifact: 
-
     #--------------------------------------------#  
     # JMeter (Performance) Test Suite - Archive
     # ToDo: Complete the ArchiveFiles@2 task and publish step 
-    - task: ArchiveFiles@2
-      displayName: 'Archive PerformanceTestSuite'
-      inputs:
-        rootFolderOrFile: 
-        includeRootFolder:
-        archiveType: 
-        archiveFile: 
-    # JMeter Test Suite - Publish    
-    - publish: 
-      displayName: 
-      artifact: 
+    # - task: ArchiveFiles@2
+    #   displayName: 'Archive PerformanceTestSuite'
+    #   inputs:
+    #     rootFolderOrFile: 
+    #     includeRootFolder:
+    #     archiveType: 
+    #     archiveFile: 
+    # # JMeter Test Suite - Publish    
+    # - publish: 
+    #   displayName: 
+    #   artifact: 
 
 #--------------------------------------------#  
 # DEPLOYMENT STAGE
