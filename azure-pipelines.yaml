@@ -159,21 +159,8 @@ stages:
         mkdir -p log/newman
         newman -v
       displayName: Install Newman
-    # Postman - Install Newman    
-    # ToDo: Update the command and verify the working directory
-    # - task: CmdLine@2
-    #   displayName: Install Newman
-    #   inputs:
-    #     script: |
-    #       node -v
-    #       sudo npm install -g newman
-    #       mkdir -p log/newman
-    #       newman -v
-    #     workingDirectory: $(System.DefaultWorkingDirectory)
 
-    # Postman Regression Test Suite    
-    # ToDo: Update the command and verify the working directory
-
+      # Postman Regression Test Suite    
     - task: CmdLine@2
       displayName: Run Regression Tests
       continueOnError: true
@@ -183,7 +170,6 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
 
     # Postman Data Validation Test Suite    
-    # ToDo: Verify the working directory and the newman scripts
     - task: CmdLine@2
       displayName: Run Data Validation Tests
       continueOnError: true
@@ -198,7 +184,7 @@ stages:
     - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: '**/TEST-*.xml'
+        testResultsFiles: '*.xml'
         searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
         mergeTestResults: true
         testRunTitle:  'Test result for postman'
