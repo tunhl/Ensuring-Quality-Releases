@@ -121,15 +121,15 @@ stages:
     - task: ArchiveFiles@2
       displayName: Archive FakeRestAPI
       inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/FakeRestApi'
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/FakeRestAPI'
         includeRootFolder: false
         archiveType: 'zip'
-        archiveFile: '$(Build.BuildId)-FakeRestApi.zip'
+        archiveFile: '$(Build.BuildId)-FakeRestAPI.zip'
     - task: PublishPipelineArtifact@1
       displayName: Upload package
       inputs:   
-        targetPath: $(Build.BuildId)-FakeRestApi.zip
-        artifact: drop-FakeRestApi
+        targetPath: $(Build.BuildId)-FakeRestAPI.zip
+        artifact: drop-FakeRestAPI
 
     - task: ArchiveFiles@2
       displayName: Archive Selenium
