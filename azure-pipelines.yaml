@@ -97,15 +97,15 @@ stages:
     
     # Run Terraform Apply
     # ToDo: Change the workingDirectory path, as applicable to you
-    - task: TerraformTaskV3@3
-      displayName: Terraform apply
-      inputs:
-        provider: 'azurerm'
-        command: 'apply'
-        commandOptions: |
-          -auto-approve
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
-        environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
+    # - task: TerraformTaskV3@3
+    #   displayName: Terraform apply
+    #   inputs:
+    #     provider: 'azurerm'
+    #     command: 'apply'
+    #     commandOptions: |
+    #       -auto-approve
+    #     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+    #     environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
 
     # ToDo: Change the workingDirectory path, as applicable to you
     # Destroy the resources in Azure by running a separate pipeline. 
@@ -298,7 +298,23 @@ stages:
                 
                 #  ToDo: Add chromedriver executable to path
                 export PATH=$PATH:/path/to/chromedriver     
-                
+                chromium-browser -version
+                chromedriver --version
+                cd $(Pipeline.Workspace)/drop-selenium
+                unzip -o $(Build.BuildId)-selenium.zip
+                sudo mkdir -p /var/log/selenium
+                sudo chmod 664 /var/log/selenium
+                python3 login.py > ui-logs.log
+                sudo mv ui-logs.log /var/log/selenium
+                cd $(System.DefaultWorkingDirectory)
+                mkdir -p log/selenium
+                sudo cp /var/log/selenium/ui-logs.log log/selenium
+          - task: PublishPipelineArtifact@1
+            displayName: Publish selenium logs
+            inputs:
+              targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/ui-logs.log'
+              artifactName: 'drop-selenium-logs'
+
                 # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
                 # ToDo: Direct the output of the Selenium Test Suite to a log file
                 
