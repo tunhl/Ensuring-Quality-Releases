@@ -185,7 +185,7 @@ stages:
       inputs:
         testResultsFormat: 'JUnit'
         testResultsFiles: '*.xml'
-        searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+        searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/log/newman'
         mergeTestResults: true
         testRunTitle:  'Test result for postman'
 
