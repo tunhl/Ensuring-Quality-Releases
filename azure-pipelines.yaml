@@ -153,18 +153,23 @@ stages:
     - script: |
         npm install
       displayName: 'npm install'
-
+    - script: |
+        node -v
+        sudo npm install -g newman
+        mkdir -p log/newman
+        newman -v
+      displayName: Install Newman
     # Postman - Install Newman    
     # ToDo: Update the command and verify the working directory
-    - task: CmdLine@2
-      displayName: Install Newman
-      inputs:
-        script: |
-          node -v
-          sudo npm install -g newman
-          mkdir -p log/newman
-          newman -v
-        workingDirectory: $(System.DefaultWorkingDirectory)
+    # - task: CmdLine@2
+    #   displayName: Install Newman
+    #   inputs:
+    #     script: |
+    #       node -v
+    #       sudo npm install -g newman
+    #       mkdir -p log/newman
+    #       newman -v
+    #     workingDirectory: $(System.DefaultWorkingDirectory)
 
     # Postman Regression Test Suite    
     # ToDo: Update the command and verify the working directory
