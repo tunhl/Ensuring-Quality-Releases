@@ -153,6 +153,24 @@ stages:
         targetPath: $(Build.BuildId)-FakeRestAPI.zip
         artifact: drop-FakeRestAPI
 
+    #--------------------------------------------#  
+    # JMeter (Performance) Test Suite - Archive
+    # ToDo: Complete the ArchiveFiles@2 task and publish step 
+    - task: ArchiveFiles@2
+      displayName: 'Archive PerformanceTestSuite'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.BuildId)-jmeter.zip'
+        replaceExistingArchive: true
+    # JMeter Test Suite - Publish    
+    - task: PublishPipelineArtifact@1
+      displayName: Upload Jmeter
+      inputs:
+        targetPath: $(Build.BuildId)-jmeter.zip
+        artifact: drop-jmeter
+
     - task: ArchiveFiles@2
       displayName: Archive Selenium
       inputs:
@@ -210,22 +228,6 @@ stages:
         searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/log/newman'
         mergeTestResults: true
         testRunTitle:  'Test result for postman'
-
-
-    #--------------------------------------------#  
-    # JMeter (Performance) Test Suite - Archive
-    # ToDo: Complete the ArchiveFiles@2 task and publish step 
-    # - task: ArchiveFiles@2
-    #   displayName: 'Archive PerformanceTestSuite'
-    #   inputs:
-    #     rootFolderOrFile: 
-    #     includeRootFolder:
-    #     archiveType: 
-    #     archiveFile: 
-    # # JMeter Test Suite - Publish    
-    # - publish: 
-    #   displayName: 
-    #   artifact: 
 
 #--------------------------------------------#  
 # DEPLOYMENT STAGE
@@ -305,9 +307,11 @@ stages:
 
                 # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
                 # ToDo: Direct the output of the Selenium Test Suite to a log file
-                
           #--------------------------------------------#    
           # Run JMeter test suite against the App Service
+          - download: current
+            artifact: drop-jmeter
+
           # ToDo: Update the script below to install jmeter, unzip the jmeter test suite published zip artifact, and run the PerformanceTestSuite.  
           # ToDo: Generate the log file. 
           - task: CmdLine@2
