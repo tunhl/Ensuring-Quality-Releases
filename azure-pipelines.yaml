@@ -251,27 +251,6 @@ stages:
               appType: webApp
               package: $(Pipeline.Workspace)/drop-FakeRestAPI/$(Build.BuildId)-FakeRestAPI.zip       # ToDo: Use the published zip artifact. 
               deploymentMethod: auto 
-          #--------------------------------------------#    
-          # Run JMeter test suite against the App Service
-          # ToDo: Update the script below to install jmeter, unzip the jmeter test suite published zip artifact, and run the PerformanceTestSuite.  
-          # ToDo: Generate the log file. 
-          - task: CmdLine@2
-            inputs:
-              script: |
-                sudo apt-get install openjdk-11-jre-headless -y
-                java -version
-                wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.5.tgz -O jmeter.tgz
-                tar xzvf jmeter.tgz
-                echo "####################"
-                echo "jmeter version : " 
-                apache-jmeter-5.5/bin/jmeter --version   
-                echo "####################"
-                mkdir -p log/jmeter
-                pwd
-                ls -la
-                ls '/home/vsts/work/1/s'
-                                                                            # ToDo: Write your commands
-              workingDirectory: $(Pipeline.Workspace)/<artifact>            # ToDo: Use the artifact name from the task above
               
   #--------------------------------------------#  
   # Selenium | Functional UI Tests
@@ -327,3 +306,23 @@ stages:
                 # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
                 # ToDo: Direct the output of the Selenium Test Suite to a log file
                 
+          #--------------------------------------------#    
+          # Run JMeter test suite against the App Service
+          # ToDo: Update the script below to install jmeter, unzip the jmeter test suite published zip artifact, and run the PerformanceTestSuite.  
+          # ToDo: Generate the log file. 
+          - task: CmdLine@2
+            inputs:
+              script: |
+                sudo apt-get install openjdk-11-jre-headless -y
+                java -version
+                wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.5.tgz -O jmeter.tgz
+                tar xzvf jmeter.tgz
+                echo "####################"
+                echo "jmeter version : " 
+                apache-jmeter-5.5/bin/jmeter --version   
+                echo "####################"
+                mkdir -p log/jmeter
+                pwd
+                ls -la
+                ls '/home/vsts/work/1/s'
+              workingDirectory: $(Pipeline.Workspace)/automatedtesting/jmeter            # ToDo: Use the artifact name from the task above
