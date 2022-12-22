@@ -118,17 +118,17 @@ stages:
     #     environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
 
 #--------------------------------------------#    
-    - task: CmdLine@2
-      displayName: Build FakeResrAPI
-      continueOnError: true
-      inputs:
-        script: |
-          python3 -m venv antenv
-          source antenv/bin/activate
-          python3 -m pip install --upgrade pip
-          pip install setup
-          pip install -r requirements.txt
-        workingDirectory: '$(System.DefaultWorkingDirectory)/FakeRestAPI'
+    # - task: CmdLine@2
+    #   displayName: Build FakeResrAPI
+    #   continueOnError: true
+    #   inputs:
+    #     script: |
+    #       python3 -m venv antenv
+    #       source antenv/bin/activate
+    #       python3 -m pip install --upgrade pip
+    #       pip install setup
+    #       pip install -r requirements.txt
+    #     workingDirectory: '$(System.DefaultWorkingDirectory)/FakeRestAPI'
     # - task: CmdLine@2
     #   displayName: Run lint test FakeResrAPI
     #   continueOnError: true
@@ -143,7 +143,7 @@ stages:
     - task: ArchiveFiles@2
       displayName: Archive FakeRestAPI
       inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/FakeRestAPI'
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/fakerestapi'
         includeRootFolder: false
         archiveType: 'zip'
         archiveFile: '$(Build.BuildId)-FakeRestAPI.zip'
@@ -255,11 +255,23 @@ stages:
           # Run JMeter test suite against the App Service
           # ToDo: Update the script below to install jmeter, unzip the jmeter test suite published zip artifact, and run the PerformanceTestSuite.  
           # ToDo: Generate the log file. 
-          # - task: CmdLine@2
-          #   inputs:
-          #     script: |
-          #                                                                   # ToDo: Write your commands
-          #     workingDirectory: $(Pipeline.Workspace)/<artifact>            # ToDo: Use the artifact name from the task above
+          - task: CmdLine@2
+            inputs:
+              script: |
+                sudo apt-get install openjdk-11-jre-headless -y
+                java -version
+                wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.5.tgz -O jmeter.tgz
+                tar xzvf jmeter.tgz
+                echo "####################"
+                echo "jmeter version : " 
+                apache-jmeter-5.5/bin/jmeter --version   
+                echo "####################"
+                mkdir -p log/jmeter
+                pwd
+                ls -la
+                ls '/home/vsts/work/1/s'
+                                                                            # ToDo: Write your commands
+              workingDirectory: $(Pipeline.Workspace)/<artifact>            # ToDo: Use the artifact name from the task above
               
   #--------------------------------------------#  
   # Selenium | Functional UI Tests
