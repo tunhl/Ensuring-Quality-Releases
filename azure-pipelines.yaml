@@ -247,10 +247,10 @@ stages:
             displayName: 'Deploy Azure Web App'
             inputs:
               azureSubscription:  '$(azureServiceConnectionId)'
-              appName: 'ensuring-quality-project-AppService'               # ToDo
+              appName: 'tunhlmywebapp'               # ToDo
               appType: webApp
               package: $(Pipeline.Workspace)/drop-FakeRestAPI/$(Build.BuildId)-FakeRestAPI.zip       # ToDo: Use the published zip artifact. 
-              deploymentMethod: auto 
+              versionSpec: '$(python.version)' 
           #--------------------------------------------#    
           # Run JMeter test suite against the App Service
           # ToDo: Update the script below to install jmeter, unzip the jmeter test suite published zip artifact, and run the PerformanceTestSuite.  
