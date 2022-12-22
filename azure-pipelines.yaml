@@ -239,9 +239,9 @@ stages:
             displayName: 'Deploy Azure Web App'
             inputs:
               azureSubscription:  '$(azureServiceConnectionId)'
-              appName: 'ensuring-quality-project-appservice'               # ToDo
+              appName: 'ensuring-quality-project-AppService'               # ToDo
               appType: webApp
-              package: $(Pipeline.Workspace)/<artifact>/<archiveFile>       # ToDo: Use the published zip artifact. 
+              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip       # ToDo: Use the published zip artifact. 
           #--------------------------------------------#    
           # Run JMeter test suite against the App Service
           # ToDo: Update the script below to install jmeter, unzip the jmeter test suite published zip artifact, and run the PerformanceTestSuite.  
