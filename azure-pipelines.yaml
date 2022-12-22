@@ -242,6 +242,7 @@ stages:
               appName: 'ensuring-quality-project-AppService'               # ToDo
               appType: webApp
               package: $(Pipeline.Workspace)/drop-FakeRestAPI/$(Build.BuildId)-FakeRestAPI.zip       # ToDo: Use the published zip artifact. 
+              deploymentMethod: auto 
           #--------------------------------------------#    
           # Run JMeter test suite against the App Service
           # ToDo: Update the script below to install jmeter, unzip the jmeter test suite published zip artifact, and run the PerformanceTestSuite.  
@@ -260,6 +261,7 @@ stages:
     environment:
       name: TEST
       resourceType: VirtualMachine
+      tags: selenium
     strategy:
       runOnce:
         deploy:
