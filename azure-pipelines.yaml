@@ -123,22 +123,22 @@ stages:
       continueOnError: true
       inputs:
         script: |
-          python -m venv antenv
+          python3 -m venv antenv
           source antenv/bin/activate
-          python -m pip install --upgrade pip
+          python3 -m pip install --upgrade pip
           pip install setup
           pip install -r requirements.txt
         workingDirectory: '$(System.DefaultWorkingDirectory)/FakeRestAPI'
-    - task: CmdLine@2
-      displayName: Run lint test FakeResrAPI
-      continueOnError: true
-      inputs:
-        script: |
-          python -m venv antenv
-          source antenv/bin/activate
-          make install
-          make lint
-        workingDirectory: '$(System.DefaultWorkingDirectory)/FakeRestAPI'
+    # - task: CmdLine@2
+    #   displayName: Run lint test FakeResrAPI
+    #   continueOnError: true
+    #   inputs:
+    #     script: |
+    #       python -m venv antenv
+    #       source antenv/bin/activate
+    #       make install
+    #       make lint
+    #     workingDirectory: '$(System.DefaultWorkingDirectory)/FakeRestAPI'
   
     - task: ArchiveFiles@2
       displayName: Archive FakeRestAPI
