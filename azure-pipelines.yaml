@@ -189,20 +189,6 @@ stages:
         mergeTestResults: true
         testRunTitle:  'Test result for postman'
 
-    #--------------------------------------------#
-    # Selenium (UI) Test Suite - Archive the package  
-    # "ArchiveFiles@2" picks up the web package and archives it.
-    - task: ArchiveFiles@2
-      displayName: 'Archive UI Tests'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-uitests.zip'
-    # Selenium Test Suite - Publish the package  
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-uitests.zip   # Same as the archiveFile artifact above. 
-      displayName: 'Upload Package'
-      artifact: drop-uitests
 
     #--------------------------------------------#  
     # JMeter (Performance) Test Suite - Archive
@@ -293,15 +279,15 @@ stages:
                 unzip -o $(Build.BuildId)-selenium.zip
                 sudo mkdir -p /var/log/selenium
                 sudo chmod 664 /var/log/selenium
-                python3 login.py > ui-logs.log
-                sudo mv ui-logs.log /var/log/selenium
+                python3 login.py > selenium-logs.log
+                sudo mv selenium-logs.log /var/log/selenium
                 cd $(System.DefaultWorkingDirectory)
                 mkdir -p log/selenium
-                sudo cp /var/log/selenium/ui-logs.log log/selenium
+                sudo cp /var/log/selenium/selenium-logs.log log/selenium
           - task: PublishPipelineArtifact@1
             displayName: Publish selenium logs
             inputs:
-              targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/ui-logs.log'
+              targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/selenium-logs.log'
               artifactName: 'drop-selenium-logs'
 
                 # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
