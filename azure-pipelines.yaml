@@ -118,7 +118,6 @@ stages:
     #     environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
 
 #--------------------------------------------#    
-      # Postman Regression Test Suite    
     - task: CmdLine@2
       displayName: Build FakeResrAPI
       continueOnError: true
