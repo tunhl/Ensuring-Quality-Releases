@@ -143,7 +143,7 @@ stages:
     - task: ArchiveFiles@2
       displayName: Archive FakeRestAPI
       inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/fakerestapi'
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/fakerestapi'
         includeRootFolder: false
         archiveType: 'zip'
         archiveFile: '$(Build.BuildId)-FakeRestAPI.zip'
@@ -309,12 +309,13 @@ stages:
                 # ToDo: Direct the output of the Selenium Test Suite to a log file
           #--------------------------------------------#    
           # Run JMeter test suite against the App Service
-          - download: current
+          - download: Jmeter test suite
             artifact: drop-jmeter
 
           # ToDo: Update the script below to install jmeter, unzip the jmeter test suite published zip artifact, and run the PerformanceTestSuite.  
           # ToDo: Generate the log file. 
           - task: CmdLine@2
+            displayName: Install JMeter
             inputs:
               script: |
                 sudo apt-get install openjdk-11-jre-headless -y
@@ -329,4 +330,18 @@ stages:
                 pwd
                 ls -la
                 ls '/home/vsts/work/1/s'
-              workingDirectory: $(Pipeline.Workspace)/automatedtesting/jmeter            # ToDo: Use the artifact name from the task above
+          - task: CmdLine@2
+            displayName: Stress Test
+            inputs:
+              script: |
+                apache-jmeter-5.5/bin/jmeter -n -t automatedtesting/jmeter/StressTest.jmx -l log/jmeter/stress-test-result.csv -e -f -o log/jmeter/stress-test-html-report -j log/jmeter/jmeter-stress-test.log
+                cat log/jmeter/jmeter-stress-test.log
+                ls '/home/vsts/work/1/s'
+                ls '/home/vsts/work/1/s/automatedtesting/jmeter'
+          - task: CmdLine@2
+            displayName: Stress Test
+            inputs:
+              script: |
+                apache-jmeter-5.5/bin/jmeter -n -t automatedtesting/jmeter/EnduranceTest.jmx -l log/jmeter/endurance-test-result.csv -e -f -o log/jmeter/endurance-test-html-report -j log/jmeter/jmeter-endurance-test.log
+                cat log/jmeter/jmeter-endurance-test.log
+  
