@@ -339,11 +339,10 @@ stages:
           - task: ArchiveFiles@2
             displayName: Archive Stress Test Results
             inputs:
-              rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stress-test-html-report'
+              rootFolderOrFile: 'log/jmeter/stress-test-html-report'
               includeRootFolder: false
               archiveType: zip
               archiveFile: stress-test-html-report.zip'
-              verbose: true
           - task: ArchiveFiles@2
             displayName: Public stress-test
             inputs:
@@ -353,7 +352,7 @@ stages:
           - task: ArchiveFiles@2
             displayName: Archive endurance-test
             inputs:
-              rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/endurance-test-html-report'
+              rootFolderOrFile: log/jmeter/endurance-test-html-report
               includeRootFolder: false
               archiveType: 'zip'
               archiveFile: 'endurance-test-html-report.zip'
