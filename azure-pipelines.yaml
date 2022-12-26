@@ -342,9 +342,10 @@ stages:
             inputs:
               rootFolderOrFile: 'log/jmeter/stress-test-html-report'
               includeRootFolder: false
-              archiveType: zip
-              archiveFile: stress-test-html-report.zip'
-          - task: ArchiveFiles@2
+              archiveType: 'zip'
+              archiveFile: 'stress-test-html-report.zip'
+              replaceExistingArchive: true
+          - task: PublishPipelineArtifact@1
             displayName: Public stress-test
             inputs:
               targetPath: stress-test-html-report.zip
@@ -357,15 +358,15 @@ stages:
               includeRootFolder: false
               archiveType: 'zip'
               archiveFile: 'endurance-test-html-report.zip'
-              verbose: true
-          - task: ArchiveFiles@2
+              replaceExistingArchive: true
+          - task: PublishPipelineArtifact@1
             displayName: Publish Endurance Test Results
             inputs:   
               targetPath: endurance-test-html-report.zip
               artifact: drop-endurance-test-html-report
-          - task: PublishPipelineArtifact@1
-            displayName: Publish jmeter logs
-            inputs:
-              targetPath: '$(System.DefaultWorkingDirectory)/log/jmeter'
-              artifactName: 'drop-jmeter-logs'
+          # - task: PublishPipelineArtifact@1
+          #   displayName: Publish jmeter logs
+          #   inputs:
+          #     targetPath: '$(System.DefaultWorkingDirectory)/log/jmeter'
+          #     artifactName: 'drop-jmeter-logs'
     
