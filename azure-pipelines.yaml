@@ -327,7 +327,7 @@ stages:
                 mkdir -p log/jmeter
                 pwd
                 ls -la
-                ls $(Pipeline.Workspace)/s'
+                ls $(Pipeline.Workspace)/s
           - task: CmdLine@2
             displayName: Stress Test
             inputs:
@@ -335,9 +335,9 @@ stages:
                 apache-jmeter-5.5/bin/jmeter -n -t automatedtesting/jmeter/ActivitiesStressTest.jmx -l log/jmeter/stress-test-result.csv -e -f -o log/jmeter/stress-test-html-report -j log/jmeter/jmeter-stress-test.log
                 cat log/jmeter/jmeter-stress-test.log
                 ls $(Pipeline.Workspace)
-                ls $(Pipeline.Workspace)/s/automatedtesting/jmeter'
+                ls $(Pipeline.Workspace)/s/automatedtesting/jmeter
           - task: CmdLine@2
-            displayName: Stress Test
+            displayName: Endurance Test
             inputs:
               script: |
                 apache-jmeter-5.5/bin/jmeter -n -t automatedtesting/jmeter/ActivitiesEnduranceTest.jmx -l log/jmeter/endurance-test-result.csv -e -f -o log/jmeter/endurance-test-html-report -j log/jmeter/jmeter-endurance-test.log
