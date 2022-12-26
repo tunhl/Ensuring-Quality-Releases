@@ -337,21 +337,32 @@ stages:
                 apache-jmeter-5.5/bin/jmeter -n -t $(Pipeline.Workspace)/drop-jmeter/ActivitiesEnduranceTest.jmx -l log/jmeter/endurance-test-result.csv -e -f -o log/jmeter/endurance-test-html-report -j log/jmeter/jmeter-endurance-test.log
                 cat log/jmeter/jmeter-endurance-test.log
           - task: ArchiveFiles@2
-            displayName: Publish Stress Test Results
+            displayName: Archive Stress Test Results
             inputs:
               rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stress-test-html-report'
               includeRootFolder: false
               archiveType: zip
-              archiveFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stress-test-html-report.zip'
+              archiveFile: stress-test-html-report.zip'
               verbose: true
           - task: ArchiveFiles@2
-            displayName: Publish Endurance Test Results
+            displayName: Public stress-test
+            inputs:
+              targetPath: stress-test-html-report.zip
+              artifact: drop-stress-test-html-report
+        
+          - task: ArchiveFiles@2
+            displayName: Archive endurance-test
             inputs:
               rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/endurance-test-html-report'
               includeRootFolder: false
-              archiveType: zip
-              archiveFile: '$(System.DefaultWorkingDirectory)/log/jmeter/endurance-test-html-report.zip'
+              archiveType: 'zip'
+              archiveFile: 'endurance-test-html-report.zip'
               verbose: true
+          - task: ArchiveFiles@2
+            displayName: Publish Endurance Test Results
+            inputs:   
+              targetPath: endurance-test-html-report.zip
+              artifact: drop-endurance-test-html-report
           - task: PublishPipelineArtifact@1
             displayName: Publish jmeter logs
             inputs:
