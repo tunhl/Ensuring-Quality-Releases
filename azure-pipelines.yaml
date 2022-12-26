@@ -305,8 +305,6 @@ stages:
               targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/selenium-logs.log'
               artifactName: 'drop-selenium-logs'
 
-                # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
-                # ToDo: Direct the output of the Selenium Test Suite to a log file
           #--------------------------------------------#    
           # Run JMeter test suite against the App Service
           - download: Jmeter test suite
