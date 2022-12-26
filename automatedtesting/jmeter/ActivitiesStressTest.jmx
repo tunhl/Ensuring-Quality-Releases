@@ -195,7 +195,7 @@
       <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Activites IDs CSV" enabled="true">
         <stringProp name="delimiter">,</stringProp>
         <stringProp name="fileEncoding"></stringProp>
-        <stringProp name="filename">D:/working/Udacity/devops/Project/Quality/Ensuring-Quality-Releases/automatedtesting/jmeter/activites_ids.csv</stringProp>
+        <stringProp name="filename">/home/adminuser/azagent/_work/1/drop-jmeter/activites_ids.csv</stringProp>
         <boolProp name="ignoreFirstLine">false</boolProp>
         <boolProp name="quotedData">true</boolProp>
         <boolProp name="recycle">true</boolProp>
@@ -262,7 +262,7 @@
       </ResultCollector>
       <hashTree/>
       <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Obj activities CSV" enabled="true">
-        <stringProp name="filename">D:/working/Udacity/devops/Project/Quality/Ensuring-Quality-Releases/automatedtesting/jmeter/objs_activites.csv</stringProp>
+        <stringProp name="filename">/home/adminuser/azagent/_work/1/drop-jmeter/objs_activites.csv</stringProp>
         <stringProp name="fileEncoding"></stringProp>
         <stringProp name="variableNames">ID,Title,DueDate,Completed</stringProp>
         <boolProp name="ignoreFirstLine">true</boolProp>
