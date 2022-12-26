@@ -299,6 +299,7 @@ stages:
                 cd $(System.DefaultWorkingDirectory)
                 mkdir -p log/selenium
                 sudo cp /var/log/selenium/selenium-logs.log log/selenium
+                sudo apt-get -y install zip
           - task: PublishPipelineArtifact@1
             displayName: Publish selenium logs
             inputs:
